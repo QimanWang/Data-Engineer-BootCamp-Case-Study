@@ -1,6 +1,4 @@
-# DE01 Case Study
-
-## Uploading your Case Study
+# Uploading your Case Study
 
 ### Step 1
 Start by forking this repository.
