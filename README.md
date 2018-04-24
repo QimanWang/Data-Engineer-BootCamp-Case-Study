@@ -6,12 +6,15 @@
 Start by forking this repository.
 
 You can do so by clicking this button:
+
 ![Forking](https://i.imgur.com/jm2Lhmk.png)
 
 And then selecting your account:
+
 ![Selecting your account](https://i.imgur.com/1MBW2rE.png)
 
 Once it finishes, you'll find that you have your own version of this respository:
+
 ![Your own version](https://i.imgur.com/E080pUH.png)
 
 ### Step 2
