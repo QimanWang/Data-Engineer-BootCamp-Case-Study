@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="sqoop-wf">
+    <start to="sqoop-branchJob"/>
+    <action name="sqoop-branchJob">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>job --exec branchJob --meta-connect jdbc:hsqldb:hsql://sandbox.hortonworks.com:16000/sqoop</command>
+        </sqoop>
+
+        <ok to="sqoop-creditcardJob"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="sqoop-creditcardJob">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>job --exec creditcardJob --meta-connect jdbc:hsqldb:hsql://sandbox.hortonworks.com:16000/sqoop</command>
+        </sqoop>
+
+        <ok to="sqoop-customerJob"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="sqoop-customerJob">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>job --exec customerJob --meta-connect jdbc:hsqldb:hsql://sandbox.hortonworks.com:16000/sqoop</command>
+        </sqoop>
+
+        <ok to="sqoop-timeid"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="sqoop-timeid">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>job --exec timeidJob --meta-connect jdbc:hsqldb:hsql://sandbox.hortonworks.com:16000/sqoop</command>
+        </sqoop>
+
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>Sqoop failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

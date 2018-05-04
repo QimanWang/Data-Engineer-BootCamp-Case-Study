@@ -1,0 +1,30 @@
+/*
+Use Hive Query and Hive Visualization tool.
+1) Find the top 20 zip codes(hint: branch_zip)
+   by total transaction value for each transac
+   tion type
+*/
+
+SELECT SUM(TRANSACTION_VALUE) AS TOTAL,
+CC.TRANSACTION_TYPE AS TYPE,
+LPAD(B.BRANCH_ZIP,5,'0') AS ZIP
+FROM CREDIT_CARD CC JOIN BRANCH B
+ON (CC.BRANCH_CODE=B.BRANCH_CODE)
+GROUP BY CC.TRANSACTION_TYPE,B.BRANCH_ZIP;
+
+/*
+Use Hive Query and Hive Visualization tool.
+2) Find total transaction value
+   for each transaction type by
+   Quarter in 2018
+Hint: Find quarter from 'creditcard' table using
+month or use 'time' table if you already added
+transaction_id column there.
+*/
+
+SELECT SUM(CC.TRANSACTION_VALUE) AS TOTAL,
+CC.TRANSACTION_TYPE AS TYPE,
+T.QUARTER AS QUARTER
+FROM CREDIT_CARD CC JOIN TIME_ID T
+ON (CC.TIMEID=T.TIMEID)
+GROUP BY CC.TRANSACTION_TYPE,T.QUARTER;

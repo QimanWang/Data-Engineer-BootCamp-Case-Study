@@ -1,0 +1,14 @@
+use CreditCard_DB;
+drop table credit_card;
+
+create external table credit_card(
+  CUST_CC_NO STRING,
+  TIMEID STRING,
+  CUST_SSN BIGINT,
+  BRANCH_CODE INT,
+  TRANSACTION_TYPE STRING,
+  TRANSACTION_VALUE DECIMAL(20,3)
+  )
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+location '/user/maria_dev/Credit_Card_System/credit_card';

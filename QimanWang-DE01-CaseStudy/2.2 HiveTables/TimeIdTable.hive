@@ -1,0 +1,13 @@
+use CreditCard_DB;
+drop table time_id;
+
+create external table time_id(
+  TIMEID String,
+  DAY TINYINT,
+  MONTH TINYINT,
+  QUARTER STRING,
+  YEAR INT
+  )
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+location '/user/maria_dev/Credit_Card_System/time_id';

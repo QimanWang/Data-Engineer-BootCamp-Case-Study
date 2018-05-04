@@ -1,0 +1,45 @@
+use creditcard_db;
+drop table temp_branch;
+
+create temporary external table temp_branch(
+ BRANCH_CODE BIGINT,
+ BRANCH_NAME STRING,
+ BRANCH_STREET STRING,
+ BRANCH_CITY STRING,
+ BRANCH_STATE STRING,
+ BRANCH_ZIP BIGINT,
+ BRANCH_PHONE STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE
+location '/user/maria_dev/Credit_Card_System/branch';
+
+
+drop table branch;
+
+create external table branch(
+ BRANCH_CODE BIGINT,
+ BRANCH_NAME STRING,
+ BRANCH_STREET STRING,
+ BRANCH_CITY STRING,
+ BRANCH_ZIP BIGINT,
+ BRANCH_PHONE STRING
+)
+PARTITIONED BY (BRANCH_STATE STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE
+location '/user/maria_dev/Credit_Card_System/partitioned_branch';
+
+set hive.exec.dynamic.partition.mode=nonstrict;
+
+INSERT INTO TABLE branch
+partition(BRANCH_STATE)
+SELECT BRANCH_CODE,
+    BRANCH_NAME,
+    BRANCH_STREET,
+    BRANCH_CITY,
+    BRANCH_ZIP,
+    BRANCH_PHONE,
+  	BRANCH_STATE
+    FROM temp_branch;

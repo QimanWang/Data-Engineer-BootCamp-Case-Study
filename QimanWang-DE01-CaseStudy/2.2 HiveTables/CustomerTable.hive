@@ -1,0 +1,20 @@
+use CreditCard_DB;
+drop table customer;
+
+create external table customer(
+    CUST_SSN BIGINT,
+    CUST_F_NAME STRING,
+    CUST_M_NAME STRING,
+    CUST_L_NAME STRING,
+    CUST_CC_NO STRING,
+    CUST_STREET STRING,
+    CUST_CITY STRING,
+    CUST_STATE STRING,
+    CUST_COUNTRY STRING,
+    CUST_ZIP BIGINT,
+    CUST_PHONE STRING,
+    CUST_EMAIL STRING
+    )
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+location '/user/maria_dev/Credit_Card_System/customer';
